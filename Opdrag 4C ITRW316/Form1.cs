@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -43,12 +44,17 @@ namespace Opdrag_4C_ITRW316
 
         private void btnFileSelect_Click(object sender, EventArgs e)
         {
-            OpenFileDialog fdg = new OpenFileDialog();
-            fdg.ShowDialog();
-            pathName = fdg.FileName;
+            OpenfileChooser();
 
         }
 
+
+        public void OpenfileChooser()
+        {
+            OpenFileDialog fdg = new OpenFileDialog();
+            fdg.ShowDialog();
+            pathName = fdg.FileName;
+        }
         private void Form1_KeyPress(object sender, KeyPressEventArgs e)
         {
           
@@ -56,7 +62,7 @@ namespace Opdrag_4C_ITRW316
 
         private void btnFileSelect_KeyDown(object sender, KeyEventArgs e)
         {
-            if (recording==false)
+            if (recording == false)
             {
                 if (e.KeyCode == Keys.R && (e.Shift && e.Control))
                 {
@@ -74,7 +80,20 @@ namespace Opdrag_4C_ITRW316
                     recording = false;
                 }
             }
-           
+            if (recording == true && !(e.KeyCode == Keys.R && (e.Shift && e.Control)))
+            {
+                if (String.IsNullOrEmpty(pathName))
+                {
+                    OpenfileChooser();
+                }
+                using (Stream str = new FileStream(pathName, FileMode.Create, FileAccess.Write))
+                {
+                    using (StreamWriter writer = new StreamWriter(str))
+                    {
+                        writer.WriteLine(e.KeyCode.ToString());
+                    }
+                }
+            }
         }
     }
 }
