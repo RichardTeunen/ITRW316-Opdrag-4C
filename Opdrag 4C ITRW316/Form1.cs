@@ -12,8 +12,8 @@ namespace Opdrag_4C_ITRW316
 {
     public partial class Form1 : Form
     {
-        public string pathName;
-        
+        public string pathName= "";
+        public bool recording = false;
         public Form1()
         {
             InitializeComponent();
@@ -47,6 +47,34 @@ namespace Opdrag_4C_ITRW316
             fdg.ShowDialog();
             pathName = fdg.FileName;
 
+        }
+
+        private void Form1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+          
+        }
+
+        private void btnFileSelect_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (recording==false)
+            {
+                if (e.KeyCode == Keys.R && (e.Shift && e.Control))
+                {
+                    lblRecording.ForeColor = Color.Red;
+                    lblRecording.Text = "Recording";
+                    recording = true;
+                }
+            }
+            else
+            {
+                if (e.KeyCode == Keys.R && (e.Shift && e.Control))
+                {
+                    lblRecording.ForeColor = Color.Blue;
+                    lblRecording.Text = "Not Recording";
+                    recording = false;
+                }
+            }
+           
         }
     }
 }
