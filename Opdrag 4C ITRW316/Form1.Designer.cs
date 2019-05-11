@@ -30,7 +30,7 @@
         {
             this.btnFileSelect = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.kbkRecording = new System.Windows.Forms.Label();
+            this.lblRecording = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btnFileSelect
@@ -55,23 +55,23 @@
             this.label1.Text = "Please Select a File to write to and then \r\n    hit Ctrl+Shift+R to start recordi" +
     "ng";
             // 
-            // kbkRecording
+            // lblRecording
             // 
-            this.kbkRecording.AutoSize = true;
-            this.kbkRecording.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.kbkRecording.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.kbkRecording.Location = new System.Drawing.Point(27, 137);
-            this.kbkRecording.Name = "kbkRecording";
-            this.kbkRecording.Size = new System.Drawing.Size(129, 20);
-            this.kbkRecording.TabIndex = 2;
-            this.kbkRecording.Text = "Not Recording ";
+            this.lblRecording.AutoSize = true;
+            this.lblRecording.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblRecording.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.lblRecording.Location = new System.Drawing.Point(27, 137);
+            this.lblRecording.Name = "lblRecording";
+            this.lblRecording.Size = new System.Drawing.Size(129, 20);
+            this.lblRecording.TabIndex = 2;
+            this.lblRecording.Text = "Not Recording ";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(353, 183);
-            this.Controls.Add(this.kbkRecording);
+            this.Controls.Add(this.lblRecording);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnFileSelect);
             this.KeyPreview = true;
@@ -86,7 +86,7 @@
 
         private System.Windows.Forms.Button btnFileSelect;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label kbkRecording;
+        private System.Windows.Forms.Label lblRecording;
     }
 }
 
