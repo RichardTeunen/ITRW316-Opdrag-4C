@@ -13,7 +13,7 @@ namespace Opdrag_4C_ITRW316
 {
     public partial class Form1 : Form
     {
-        public string pathName = "";
+        public string pathName= "";
         public bool recording = false;
         public Form1()
         {
@@ -57,7 +57,7 @@ namespace Opdrag_4C_ITRW316
         }
         private void Form1_KeyPress(object sender, KeyPressEventArgs e)
         {
-
+          
         }
 
         private void btnFileSelect_KeyDown(object sender, KeyEventArgs e)
@@ -86,7 +86,7 @@ namespace Opdrag_4C_ITRW316
                 {
                     OpenfileChooser();
                 }
-                using (Stream str = new FileStream(pathName, FileMode.Append, FileAccess.Write))
+                using (Stream str = new FileStream(pathName, FileMode.Create, FileAccess.Write))
                 {
                     using (StreamWriter writer = new StreamWriter(str))
                     {
