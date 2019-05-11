@@ -43,6 +43,7 @@
             this.btnFileSelect.Text = "Select File to write to ";
             this.btnFileSelect.UseVisualStyleBackColor = true;
             this.btnFileSelect.Click += new System.EventHandler(this.btnFileSelect_Click);
+            this.btnFileSelect.KeyDown += new System.Windows.Forms.KeyEventHandler(this.btnFileSelect_KeyDown);
             // 
             // label1
             // 
@@ -77,6 +78,7 @@
             this.KeyPreview = true;
             this.Name = "Form1";
             this.Text = "Form1";
+            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Form1_KeyPress);
             this.ResumeLayout(false);
             this.PerformLayout();
 
