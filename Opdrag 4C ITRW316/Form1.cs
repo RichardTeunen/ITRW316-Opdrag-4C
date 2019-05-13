@@ -1,5 +1,4 @@
-﻿using Hotkeys;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -9,15 +8,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Open.WinKeyboardHook;
 
 namespace Opdrag_4C_ITRW316
 {
     public partial class Form1 : Form
     {
-        private GlobalHotkey ghkStartStop;
-        private List<GlobalHotkey> ghkNormalList = new List<GlobalHotkey>();
-
         public string pathName = "";
         public bool recording = false;
         int counter = 0;
@@ -25,41 +20,7 @@ namespace Opdrag_4C_ITRW316
         public Form1()
         {
             InitializeComponent();
-
-            ghkStartStop = new GlobalHotkey(Constants.CTRL + Constants.SHIFT, Keys.R, this);
-
-            ghkNormalList.Add(new GlobalHotkey(Constants.NOMOD, Keys.A, this));
-            ghkNormalList.Add(new GlobalHotkey(Constants.NOMOD, Keys.B, this));
-            ghkNormalList.Add(new GlobalHotkey(Constants.NOMOD, Keys.C, this));
-            ghkNormalList.Add(new GlobalHotkey(Constants.NOMOD, Keys.D, this));
-            ghkNormalList.Add(new GlobalHotkey(Constants.NOMOD, Keys.E, this));
-
-            ghkNormalList.Add(new GlobalHotkey(Constants.NOMOD, Keys.F, this));
-            ghkNormalList.Add(new GlobalHotkey(Constants.NOMOD, Keys.G, this));
-            ghkNormalList.Add(new GlobalHotkey(Constants.NOMOD, Keys.H, this));
-            ghkNormalList.Add(new GlobalHotkey(Constants.NOMOD, Keys.I, this));
-            ghkNormalList.Add(new GlobalHotkey(Constants.NOMOD, Keys.J, this));
-
-            ghkNormalList.Add(new GlobalHotkey(Constants.NOMOD, Keys.K, this));
-            ghkNormalList.Add(new GlobalHotkey(Constants.NOMOD, Keys.L, this));
-            ghkNormalList.Add(new GlobalHotkey(Constants.NOMOD, Keys.M, this));
-            ghkNormalList.Add(new GlobalHotkey(Constants.NOMOD, Keys.N, this));
-            ghkNormalList.Add(new GlobalHotkey(Constants.NOMOD, Keys.O, this));
-
-            ghkNormalList.Add(new GlobalHotkey(Constants.NOMOD, Keys.P, this));
-            ghkNormalList.Add(new GlobalHotkey(Constants.NOMOD, Keys.Q, this));
-            ghkNormalList.Add(new GlobalHotkey(Constants.NOMOD, Keys.R, this));
-            ghkNormalList.Add(new GlobalHotkey(Constants.NOMOD, Keys.S, this));
-            ghkNormalList.Add(new GlobalHotkey(Constants.NOMOD, Keys.T, this));
-
-            ghkNormalList.Add(new GlobalHotkey(Constants.NOMOD, Keys.U, this));
-            ghkNormalList.Add(new GlobalHotkey(Constants.NOMOD, Keys.V, this));
-            ghkNormalList.Add(new GlobalHotkey(Constants.NOMOD, Keys.W, this));
-            ghkNormalList.Add(new GlobalHotkey(Constants.NOMOD, Keys.X, this));
-            ghkNormalList.Add(new GlobalHotkey(Constants.NOMOD, Keys.Y, this));
-            ghkNormalList.Add(new GlobalHotkey(Constants.NOMOD, Keys.Z, this));
-
-            
+           
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
@@ -137,7 +98,7 @@ namespace Opdrag_4C_ITRW316
             }
         }
 
-        void hook_KeyPressed(object sender, KeyEventArgs e)
+        void hook_KeyPressed(object sender, KeyEventArgs e) //Ctrl + Shift + R
         {
             counter++;
 
