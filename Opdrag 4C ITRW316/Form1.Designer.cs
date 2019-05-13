@@ -36,11 +36,12 @@
             // btnFileSelect
             // 
             this.btnFileSelect.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
-            this.btnFileSelect.Location = new System.Drawing.Point(91, 101);
+            this.btnFileSelect.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnFileSelect.Location = new System.Drawing.Point(81, 72);
             this.btnFileSelect.Name = "btnFileSelect";
             this.btnFileSelect.Size = new System.Drawing.Size(163, 27);
             this.btnFileSelect.TabIndex = 0;
-            this.btnFileSelect.Text = "Select File to write to ";
+            this.btnFileSelect.Text = "Select File";
             this.btnFileSelect.UseVisualStyleBackColor = true;
             this.btnFileSelect.Click += new System.EventHandler(this.btnFileSelect_Click);
             this.btnFileSelect.KeyDown += new System.Windows.Forms.KeyEventHandler(this.btnFileSelect_KeyDown);
@@ -48,22 +49,22 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(23, 45);
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(11, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(334, 40);
+            this.label1.Size = new System.Drawing.Size(330, 48);
             this.label1.TabIndex = 1;
-            this.label1.Text = "Please Select a File to write to and then \r\n    hit Ctrl+Shift+R to start recordi" +
-    "ng";
+            this.label1.Text = "1. Select a File to write to\r\n2. Press Ctrl+Shift+R to start recording your key s" +
+    "trokes\r\n3. Press Ctrl+Shift+R to stop recording";
             // 
             // lblRecording
             // 
             this.lblRecording.AutoSize = true;
-            this.lblRecording.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblRecording.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.lblRecording.Location = new System.Drawing.Point(27, 137);
+            this.lblRecording.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblRecording.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.lblRecording.Location = new System.Drawing.Point(107, 119);
             this.lblRecording.Name = "lblRecording";
-            this.lblRecording.Size = new System.Drawing.Size(129, 20);
+            this.lblRecording.Size = new System.Drawing.Size(115, 20);
             this.lblRecording.TabIndex = 2;
             this.lblRecording.Text = "Not Recording ";
             // 
@@ -77,7 +78,7 @@
             this.Controls.Add(this.btnFileSelect);
             this.KeyPreview = true;
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Key Hooking";
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Form1_KeyPress);
             this.ResumeLayout(false);
             this.PerformLayout();

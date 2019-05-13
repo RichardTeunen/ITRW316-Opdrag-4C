@@ -13,7 +13,7 @@ namespace Opdrag_4C_ITRW316
 {
     public partial class Form1 : Form
     {
-        public string pathName= "";
+        public string pathName = "";
         public bool recording = false;
         public Form1()
         {
@@ -92,7 +92,6 @@ namespace Opdrag_4C_ITRW316
                     {
                         writer.WriteLine(e.KeyCode.ToString());
                     }
-
                 }
             }
         }
