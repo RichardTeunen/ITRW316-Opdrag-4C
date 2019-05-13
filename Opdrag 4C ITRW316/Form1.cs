@@ -45,54 +45,67 @@ namespace Opdrag_4C_ITRW316
         private void btnFileSelect_Click(object sender, EventArgs e)
         {
             OpenfileChooser();
-
+            Focus();
         }
-
 
         public void OpenfileChooser()
         {
             OpenFileDialog fdg = new OpenFileDialog();
             fdg.ShowDialog();
             pathName = fdg.FileName;
-        }
-        private void Form1_KeyPress(object sender, KeyPressEventArgs e)
-        {
-          
+            MessageBox.Show(pathName);
         }
 
-        private void btnFileSelect_KeyDown(object sender, KeyEventArgs e)
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
             if (recording == false)
             {
-                if (e.KeyCode == Keys.R && (e.Shift && e.Control))
+                if (e.Control && e.Shift && e.KeyCode == Keys.R)
                 {
                     lblRecording.ForeColor = Color.Red;
                     lblRecording.Text = "Recording";
                     recording = true;
                 }
             }
-            else
+            else if (recording)
             {
-                if (e.KeyCode == Keys.R && (e.Shift && e.Control))
-                {
-                    lblRecording.ForeColor = Color.Blue;
-                    lblRecording.Text = "Not Recording";
-                    recording = false;
-                }
-            }
-            if (recording == true && !(e.KeyCode == Keys.R && (e.Shift && e.Control)))
-            {
-                if (String.IsNullOrEmpty(pathName))
-                {
+                while (String.IsNullOrEmpty(pathName))
                     OpenfileChooser();
-                }
-                using (Stream str = new FileStream(pathName, FileMode.Create, FileAccess.Write))
+
+                using (Stream str = new FileStream(pathName, FileMode.Append, FileAccess.Write))
                 {
                     using (StreamWriter writer = new StreamWriter(str))
                     {
-                        writer.WriteLine(e.KeyCode.ToString());
+                        if (e.Control && e.Shift && e.KeyCode == Keys.R)
+                        {
+                            lblRecording.ForeColor = Color.Blue;
+                            lblRecording.Text = "Not Recording";
+                            recording = false;
+                        }
+                        else if (!e.Control && !e.Shift)
+                        {
+                            writer.Write(e.KeyCode.ToString().ToLower());
+                        }
+                        else if (e.Shift && e.KeyCode != Keys.HanjaMode)
+                        {
+                            writer.Write(e.KeyCode.ToString().ToUpper());
+                        }       
                     }
                 }
+                
+            }
+        }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            if (!String.IsNullOrEmpty(pathName))
+            {
+                using (Stream str = new FileStream(pathName, FileMode.Create, FileAccess.ReadWrite))
+                { }
+            }
+            else
+            {
+                MessageBox.Show("No file has been selected.");
             }
         }
     }
