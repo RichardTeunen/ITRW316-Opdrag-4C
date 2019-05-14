@@ -9,54 +9,145 @@ using System.Runtime.InteropServices;
 
 namespace Opdrag_4C_ITRW316
 {
-    class InterceptKeys
+    public sealed class KeyboardHook : IDisposable
     {
-        private const int WH_KEYBOARD_LL = 13;
-        private const int WM_KEYDOWN = 0x0100;
-        private static LowLevelKeyboardProc _proc = HookCallback;
-        private static IntPtr _hookID = IntPtr.Zero;
+        // Registers a hot key with Windows.
+        [DllImport("user32.dll")]
+        private static extern bool RegisterHotKey(IntPtr hWnd, int id, uint fsModifiers, uint vk);
+        // Unregisters the hot key with Windows.
+        [DllImport("user32.dll")]
+        private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
 
-        public static void Main()
+        /// <summary>
+        /// Represents the window that is used internally to get the messages.
+        /// </summary>
+        private class Window : NativeWindow, IDisposable
         {
-            _hookID = SetHook(_proc);
-            Application.Run();
-            UnhookWindowsHookEx(_hookID);
-        }
+            private static int WM_HOTKEY = 0x0312;
 
-        private static IntPtr SetHook(LowLevelKeyboardProc proc)
-        {
-            using (Process curProcess = Process.GetCurrentProcess())
-            using (ProcessModule curModule = curProcess.MainModule)
+            public Window()
             {
-                return SetWindowsHookEx(WH_KEYBOARD_LL, proc,
-                    GetModuleHandle(curModule.ModuleName), 0);
-            }
-        }
-
-        private delegate IntPtr LowLevelKeyboardProc(int nCode, IntPtr wParam, IntPtr lParam);
-
-        private static IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)
-        {
-            if (nCode >= 0 && wParam == (IntPtr)WM_KEYDOWN)
-            {
-                int vkCode = Marshal.ReadInt32(lParam);
-                Console.WriteLine((Keys)vkCode);
+                // create the handle for the window.
+                this.CreateHandle(new CreateParams());
             }
 
-            return CallNextHookEx(_hookID, nCode, wParam, lParam);
+            /// <summary>
+            /// Overridden to get the notifications.
+            /// </summary>
+            /// <param name="m"></param>
+            protected override void WndProc(ref Message m)
+            {
+                base.WndProc(ref m);
+
+                // check if we got a hot key pressed.
+                if (m.Msg == WM_HOTKEY)
+                {
+                    // get the keys.
+                    Keys key = (Keys)(((int)m.LParam >> 16) & 0xFFFF);
+                    ModifierKeys modifier = (ModifierKeys)((int)m.LParam & 0xFFFF);
+
+                    // invoke the event to notify the parent.
+                    if (KeyPressed != null)
+                        KeyPressed(this, new KeyPressedEventArgs(modifier, key));
+                }
+            }
+
+            public event EventHandler<KeyPressedEventArgs> KeyPressed;
+
+            #region IDisposable Members
+
+            public void Dispose()
+            {
+                this.DestroyHandle();
+            }
+
+            #endregion
         }
 
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        private static extern IntPtr SetWindowsHookEx(int idHook, LowLevelKeyboardProc lpfn, IntPtr hMod, uint dwThreadId);
+        private Window _window = new Window();
+        private int _currentId;
 
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool UnhookWindowsHookEx(IntPtr hhk);
+        public KeyboardHook()
+        {
+            // register the event of the inner native window.
+            _window.KeyPressed += delegate (object sender, KeyPressedEventArgs args)
+            {
+                if (KeyPressed != null)
+                    KeyPressed(this, args);
+            };
+        }
 
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        private static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode, IntPtr wParam, IntPtr lParam);
+        /// <summary>
+        /// Registers a hot key in the system.
+        /// </summary>
+        /// <param name="modifier">The modifiers that are associated with the hot key.</param>
+        /// <param name="key">The key itself that is associated with the hot key.</param>
+        public void RegisterHotKey(ModifierKeys modifier, Keys key)
+        {
+            // increment the counter.
+            _currentId = _currentId + 1;
 
-        [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        private static extern IntPtr GetModuleHandle(string lpModuleName);
+            // register the hot key.
+            if (!RegisterHotKey(_window.Handle, _currentId, (uint)modifier, (uint)key))
+                throw new InvalidOperationException("Couldn’t register the hot key.");
+        }
+
+        /// <summary>
+        /// A hot key has been pressed.
+        /// </summary>
+        public event EventHandler<KeyPressedEventArgs> KeyPressed;
+
+        #region IDisposable Members
+
+        public void Dispose()
+        {
+            // unregister all the registered hot keys.
+            for (int i = _currentId; i > 0; i--)
+            {
+                UnregisterHotKey(_window.Handle, i);
+            }
+
+            // dispose the inner native window.
+            _window.Dispose();
+        }
+
+        #endregion
+    }
+
+    /// <summary>
+    /// Event Args for the event that is fired after the hot key has been pressed.
+    /// </summary>
+    public class KeyPressedEventArgs : EventArgs
+    {
+        private ModifierKeys _modifier;
+        private Keys _key;
+
+        internal KeyPressedEventArgs(ModifierKeys modifier, Keys key)
+        {
+            _modifier = modifier;
+            _key = key;
+        }
+
+        public ModifierKeys Modifier
+        {
+            get { return _modifier; }
+        }
+
+        public Keys Key
+        {
+            get { return _key; }
+        }
+    }
+
+    /// <summary>
+    /// The enumeration of possible modifiers.
+    /// </summary>
+    [Flags]
+    public enum ModifierKeys : uint
+    {
+        Alt = 1,
+        Control = 2,
+        Shift = 4,
+        Win = 8
     }
 }

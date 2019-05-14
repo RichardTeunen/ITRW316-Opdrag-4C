@@ -13,6 +13,7 @@ namespace Opdrag_4C_ITRW316
 {
     public partial class Form1 : Form
     {
+        KeyboardHook hook = new KeyboardHook();
         public string pathName = "";
         public bool recording = false;
         int counter = 0;
@@ -20,7 +21,8 @@ namespace Opdrag_4C_ITRW316
         public Form1()
         {
             InitializeComponent();
-           
+            hook.KeyPressed += new EventHandler<KeyPressedEventArgs>(hook_KeyPressed);
+            hook.RegisterHotKey(Opdrag_4C_ITRW316.ModifierKeys.Control | Opdrag_4C_ITRW316.ModifierKeys.Shift, Keys.R);
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
@@ -61,28 +63,7 @@ namespace Opdrag_4C_ITRW316
 
         private void Hotkey_KeyDown(object sender, KeyEventArgs e)
         {
-            if (recording)
-            {
-                while (String.IsNullOrEmpty(pathName))
-                    OpenfileChooser();
-
-                using (Stream str = new FileStream(pathName, FileMode.Append, FileAccess.Write))
-                {
-                    using (StreamWriter writer = new StreamWriter(str))
-                    {
-                        if (!(e.KeyCode == Keys.Control || e.KeyCode == Keys.Shift))
-                        {
-                            writer.Write(e.KeyCode.ToString().ToLower());
-                        }
-                        /*
-                        else if (Key.Shift && e.Key != Keys.HanjaMode)
-                        {
-                            writer.Write(e.Key.ToString().ToUpper());
-                        }
-                        */
-                    }
-                }
-            }
+            
         }
 
         private void btnClear_Click(object sender, EventArgs e)
@@ -98,7 +79,7 @@ namespace Opdrag_4C_ITRW316
             }
         }
 
-        void hook_KeyPressed(object sender, KeyEventArgs e) //Ctrl + Shift + R
+        public void hook_KeyPressed(object sender, KeyPressedEventArgs e)
         {
             counter++;
 
@@ -116,12 +97,42 @@ namespace Opdrag_4C_ITRW316
                 recording = false;
             }
 
-            Focus();
+            this.Focus();
         }
 
         private void Form1_KeyPress(object sender, KeyPressEventArgs e)
         {
             
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (recording)
+            {
+                while (String.IsNullOrEmpty(pathName))
+                    OpenfileChooser();
+
+                using (Stream str = new FileStream(pathName, FileMode.Append, FileAccess.Write))
+                {
+                    using (StreamWriter writer = new StreamWriter(str))
+                    {
+                        if (!(e.KeyCode == Keys.Control || e.KeyCode == Keys.Shift))
+                        {
+                            writer.Write(e.KeyCode.ToString().ToLower());
+                        }                        
+                        else if (e.Shift && e.KeyCode != Keys.HanjaMode)
+                        {
+                            if (e.KeyCode != Keys.Shift)
+                                writer.Write(e.KeyCode.ToString().ToUpper());
+                        }
+                    }
+                }
+            }
         }
     }
 }
