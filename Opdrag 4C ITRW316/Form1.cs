@@ -14,7 +14,7 @@ namespace Opdrag_4C_ITRW316
     public partial class Form1 : Form
     {
         KeyboardHook hook = new KeyboardHook();
-        public string pathName = "";
+        public string pathName;
         public bool recording = false;
         int counter = 0;
 
