@@ -1,0 +1,19 @@
+﻿<Window x:Class="Opdrag4C.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Opdrag4C"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="407.345" Width="1007.486" Loaded="Window_Loaded">
+    <Grid Margin="0,71,32,34">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="125*"/>
+            <ColumnDefinition Width="636*"/>
+            <ColumnDefinition Width="172*"/>
+            <ColumnDefinition Width="325*"/>
+        </Grid.ColumnDefinitions>
+        <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="271" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="957" Grid.ColumnSpan="4"/>
+
+    </Grid>
+</Window>
