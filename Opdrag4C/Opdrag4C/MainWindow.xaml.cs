@@ -51,8 +51,10 @@ namespace Opdrag4C
 
         public void _listener_OnKeyPressed(Object sender, KeyPressedArgs e)
         {
-            if (e.KeyPressed == Key.LeftCtrl && e.KeyPressed == Key.LeftShift && e.KeyPressed == Key.R)
+            if (Keyboard.GetKeyStates(Key.LeftCtrl) == KeyStates.Down && Keyboard.GetKeyStates(Key.LeftShift) == KeyStates.Down 
+                && e.KeyPressed == Key.R)
             {
+                System.Windows.Forms.MessageBox.Show("Hi");
                 if (recording)
                 {
                     System.Windows.Forms.MessageBox.Show("Recording");
@@ -64,8 +66,9 @@ namespace Opdrag4C
                     recording = true;
                 }                  
             }
+
             int posX = System.Windows.Forms.Cursor.Position.X,
-                   posY = System.Windows.Forms.Cursor.Position.Y;
+                posY = System.Windows.Forms.Cursor.Position.Y;
 
             switch (e.KeyPressed)
             {
