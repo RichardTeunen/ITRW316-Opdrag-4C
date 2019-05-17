@@ -64,7 +64,26 @@ namespace Opdrag4C
                     recording = true;
                 }                  
             }
+            int posX = System.Windows.Forms.Cursor.Position.X,
+                   posY = System.Windows.Forms.Cursor.Position.Y;
 
+            switch (e.KeyPressed)
+            {
+                case Key.Left:
+                    System.Windows.Forms.Cursor.Position = new System.Drawing.Point(posX - 10, posY);
+                    break;
+                case Key.Right:
+                    System.Windows.Forms.Cursor.Position = new System.Drawing.Point(posX + 10, posY);
+                    break;
+                case Key.Up:
+                    System.Windows.Forms.Cursor.Position = new System.Drawing.Point(posX, posY - 10);
+                    break;
+                case Key.Down:
+                    System.Windows.Forms.Cursor.Position = new System.Drawing.Point(posX, posY + 10);
+                    break;
+                default:
+                    break;
+            }
             if (recording)
             {
                 using (Stream str = new FileStream(pathName, FileMode.Append, FileAccess.Write))
@@ -83,26 +102,7 @@ namespace Opdrag4C
                     }
                 }
 
-                int posX = System.Windows.Forms.Cursor.Position.X,
-                    posY = System.Windows.Forms.Cursor.Position.Y;
-
-                switch (e.KeyPressed)
-                {
-                    case Key.Left:
-                        System.Windows.Forms.Cursor.Position = new System.Drawing.Point(posX - 10, posY);
-                        break;
-                    case Key.Right:
-                        System.Windows.Forms.Cursor.Position = new System.Drawing.Point(posX + 10, posY);
-                        break;
-                    case Key.Up:
-                        System.Windows.Forms.Cursor.Position = new System.Drawing.Point(posX, posY - 10);
-                        break;
-                    case Key.Down:
-                        System.Windows.Forms.Cursor.Position = new System.Drawing.Point(posX, posY + 10);
-                        break;
-                    default:
-                        break;
-                }
+               
             }
         }
     }
