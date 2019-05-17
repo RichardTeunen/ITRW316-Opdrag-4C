@@ -30,7 +30,6 @@ namespace Opdrag4C
         public MainWindow()
         {
             InitializeComponent();
-            NativeMethods.SetCursorPos(300, 300);
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -45,39 +44,25 @@ namespace Opdrag4C
             pathName = dlg.FileName;
         }
 
-        [DllImport("user32.dll")]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        internal static extern bool GetCursorPos(ref Win32Point pt);
-
-        [StructLayout(LayoutKind.Sequential)]
-        internal struct Win32Point
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            public Int32 X;
-            public Int32 Y;
-        };
-
-        public static Point GetMousePosition()
-        {
-            Win32Point w32Mouse = new Win32Point();
-            GetCursorPos(ref w32Mouse);
-            return new Point(w32Mouse.X, w32Mouse.Y);
-        }
-
-        public partial class NativeMethods
-        {
-            [System.Runtime.InteropServices.DllImportAttribute("user32.dll", EntryPoint = "SetCursorPos")]
-            [return: System.Runtime.InteropServices.MarshalAsAttribute(System.Runtime.InteropServices.UnmanagedType.Bool)]
-            public static extern bool SetCursorPos(int X, int Y);
+            _listener.UnHookKeyboard();
         }
 
         public void _listener_OnKeyPressed(Object sender, KeyPressedArgs e)
         {
-            if ((e.KeyPressed == Key.LeftCtrl) && (e.KeyPressed == Key.LeftShift) && (e.KeyPressed == Key.R))
+            if (e.KeyPressed == Key.LeftCtrl && e.KeyPressed == Key.LeftShift && e.KeyPressed == Key.R)
             {
                 if (recording)
+                {
+                    System.Windows.Forms.MessageBox.Show("Recording");
                     recording = false;
+                }
                 else
+                {
+                    System.Windows.Forms.MessageBox.Show("Recording Halted");
                     recording = true;
+                }                  
             }
 
             if (recording)
@@ -98,24 +83,24 @@ namespace Opdrag4C
                     }
                 }
 
-                Point mousePos = MainWindow.GetMousePosition();
+                int posX = System.Windows.Forms.Cursor.Position.X,
+                    posY = System.Windows.Forms.Cursor.Position.Y;
 
                 switch (e.KeyPressed)
                 {
-                    
                     case Key.Left:
-                        NativeMethods.SetCursorPos((int) mousePos.X - 10, (int) mousePos.Y);
+                        System.Windows.Forms.Cursor.Position = new System.Drawing.Point(posX - 10, posY);
                         break;
                     case Key.Right:
-                        NativeMethods.SetCursorPos((int) mousePos.X + 10, (int) mousePos.Y);
+                        System.Windows.Forms.Cursor.Position = new System.Drawing.Point(posX + 10, posY);
                         break;
                     case Key.Up:
-                        NativeMethods.SetCursorPos((int) mousePos.X, (int) mousePos.Y + 10);
+                        System.Windows.Forms.Cursor.Position = new System.Drawing.Point(posX, posY - 10);
                         break;
                     case Key.Down:
-                        NativeMethods.SetCursorPos((int) mousePos.X, (int) mousePos.Y - 10);
+                        System.Windows.Forms.Cursor.Position = new System.Drawing.Point(posX, posY + 10);
                         break;
-                    default: 
+                    default:
                         break;
                 }
             }
