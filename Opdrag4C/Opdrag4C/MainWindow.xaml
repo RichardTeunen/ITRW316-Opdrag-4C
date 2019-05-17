@@ -13,7 +13,7 @@
             <ColumnDefinition Width="172*"/>
             <ColumnDefinition Width="325*"/>
         </Grid.ColumnDefinitions>
-        <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="271" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="957" Grid.ColumnSpan="4"/>
+        <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="271" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="922" Grid.ColumnSpan="4" Margin="35,0,0,0"/>
 
     </Grid>
 </Window>
