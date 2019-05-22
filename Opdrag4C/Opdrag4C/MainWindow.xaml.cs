@@ -46,23 +46,24 @@ namespace Opdrag4C
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            _listener.UnHookKeyboard();
+           
         }
 
         public void _listener_OnKeyPressed(Object sender, KeyPressedArgs e)
         {
-            if (Keyboard.GetKeyStates(Key.LeftCtrl) == KeyStates.Down && Keyboard.GetKeyStates(Key.LeftShift) == KeyStates.Down 
-                && e.KeyPressed == Key.R)
+            /* if (Keyboard.GetKeyStates(Key.LeftCtrl) == KeyStates.Down && Keyboard.GetKeyStates(Key.LeftShift) == KeyStates.Down 
+                 && e.KeyPressed == Key.R)*/
+            //if(e.KeyPressed == Key.PageUp&& e.KeyPressed== Key.PageDown)
+            if ((Keyboard.GetKeyStates(Key.PageUp) == KeyStates.Down && e.KeyPressed==Key.PageDown) || (Keyboard.GetKeyStates(Key.PageDown) == KeyStates.Down && e.KeyPressed == Key.PageUp))
             {
-                System.Windows.Forms.MessageBox.Show("Hi");
                 if (recording)
                 {
-                    System.Windows.Forms.MessageBox.Show("Recording");
+                    System.Windows.Forms.MessageBox.Show("Recording halted");
                     recording = false;
                 }
                 else
                 {
-                    System.Windows.Forms.MessageBox.Show("Recording Halted");
+                    System.Windows.Forms.MessageBox.Show("Recording");
                     recording = true;
                 }                  
             }
@@ -93,14 +94,14 @@ namespace Opdrag4C
                 {
                     using (StreamWriter writer = new StreamWriter(str))
                     {
-                        if (!(e.KeyPressed == Key.LeftCtrl || e.KeyPressed == Key.LeftShift))
+                        if (!(e.KeyPressed == Key.LeftCtrl || Keyboard.GetKeyStates(Key.LeftCtrl) == KeyStates.Down))
                         {
-                            writer.Write(e.KeyPressed.ToString().ToLower());
+                            writer.Write(e.KeyPressed.ToString().ToLower() + " ");
                         }
-                        else if (e.KeyPressed == Key.LeftShift && e.KeyPressed != Key.HanjaMode)
+                        else if (Keyboard.GetKeyStates(Key.LeftCtrl) == KeyStates.Down && e.KeyPressed != Key.HanjaMode)
                         {
                             if (e.KeyPressed != Key.LeftShift)
-                                writer.Write(e.KeyPressed.ToString().ToUpper());
+                                writer.Write(e.KeyPressed.ToString().ToUpper() +" ");//Will caps the key that you enter into the text file
                         }
                     }
                 }
